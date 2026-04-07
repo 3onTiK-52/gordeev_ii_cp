@@ -1,0 +1,18 @@
+# Папки сборки CMake (чтобы бинарники не улетали в Git)
+build/
+cmake-build-*/
+out/
+bin/
+
+# Файлы настроек редакторов кода (VS code)
+.vscode/
+*.suo
+*.user
+
+# Датасеты и логи
+data/*.csv
+*.log
+metrics*.csv
+
+# Системные файлы
+Thumbs.db

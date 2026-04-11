@@ -4,8 +4,10 @@ cmake-build-*/
 out/
 bin/
 
-# Файлы настроек редакторов кода (VS code)
+# Файлы настроек редакторов кода (VS Code, Clangd)
 .vscode/
+.cache/
+compile_commands.json
 *.suo
 *.user
 

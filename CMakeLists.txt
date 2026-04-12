@@ -25,3 +25,23 @@ add_executable(nn_app app/main.cpp)
 
 # Подключаем нашу библиотеку к исполняемому файлу
 target_link_libraries(nn_app PRIVATE nn_lib)
+
+# --- Блок тестирования ---
+# Включаем встроенную функцию скачивания из сети
+include(FetchContent)
+
+# Указываем, откуда скачать фреймворк Google Test
+FetchContent_Declare(
+  googletest
+  GIT_REPOSITORY https://github.com/google/googletest.git
+  GIT_TAG        v1.14.0
+)
+
+# Скачиваем и делаем его доступным для нашего проекта
+FetchContent_MakeAvailable(googletest)
+
+# Включаем панель тестирования в CMake
+enable_testing()
+
+# Говорим CMake, что у нас появилась папка с тестами
+add_subdirectory(tests)

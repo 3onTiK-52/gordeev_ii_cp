@@ -14,8 +14,8 @@ TEST(ActivationTest, ReLUForward) {
 
   nn::Matrix Y = relu->forward(X);
 
-  // Метод .isApprox() - это функция библиотеки Eigen.
-  // Она сравнивает две матрицы с учетом эпсилон погрешностей
+  // .isApprox() - это метод библиотеки Eigen.
+  // Он сравнивает две матрицы с учетом эпсилон погрешностей
   EXPECT_TRUE(Y.isApprox(expected_Y));
 }
 

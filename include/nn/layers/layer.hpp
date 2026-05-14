@@ -1,11 +1,9 @@
 #pragma once
-#include <Eigen/Dense>
+#include "../core/types.hpp"
 
 namespace nn {
 
 class Optimizer;
-
-using Matrix = Eigen::MatrixXf;
 
 class Layer {
 public:

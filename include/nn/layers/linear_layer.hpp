@@ -1,4 +1,5 @@
 #pragma once
+#include "../optimizers/optimizer.hpp"
 #include "layer.hpp"
 #include <Eigen/Dense>
 #include <cmath>
@@ -44,10 +45,8 @@ public:
   }
 
   void update(Optimizer &opt) override {
-    // Код раскомментировать, когда напишу класс Optimizer.
-
-    // opt.update(weights_, grad_weights_);
-    // opt.update(biases_, grad_biases_);
+    opt.update(weights_, grad_weights_);
+    opt.update(biases_, grad_biases_);
   }
 
   // Геттеры (для тестов, чтобы проверять правильность градиентов)

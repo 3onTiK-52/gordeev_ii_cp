@@ -1,6 +1,6 @@
 #include <iostream>
 
 int main() {
-  std::cout << "Neural Network App is ready for real data!" << std::endl;
+  std::cout << "Waiting...";
   return 0;
 }

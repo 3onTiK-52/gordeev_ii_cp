@@ -5,7 +5,8 @@ add_executable(nn_tests
     test_activation_layer.cpp 
     test_sequential.cpp 
     test_mse_loss.cpp 
-    test_sgd.cpp)
+    test_sgd.cpp
+    test_xor_learning.cpp)
 
 # Подключаем к нему нашу библиотеку нейросети и библиотеку GTest
 target_link_libraries(nn_tests PRIVATE nn_lib GTest::gtest_main)

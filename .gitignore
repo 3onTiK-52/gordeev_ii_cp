@@ -16,5 +16,9 @@ data/*.csv
 *.log
 metrics*.csv
 
+mnist_train.csv
+mnist_test.csv
+mnist_test.csv:Zone.Identifier
+
 # Системные файлы
 Thumbs.dbmnist_train.csv

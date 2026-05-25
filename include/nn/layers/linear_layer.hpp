@@ -58,6 +58,55 @@ public:
   // Сеттеры для ручного ввода весов (для тестов)
   void set_weights(const Matrix &w) { weights_ = w; }
   void set_biases(const Matrix &b) { biases_ = b; }
+
+  void save(std::ostream &os) const override {
+    // 1. Сохраняем матрицу весов
+    Matrix::Index w_rows = weights_.rows();
+    Matrix::Index w_cols = weights_.cols();
+    // Записываем размеры (метаданные)
+    os.write(reinterpret_cast<const char *>(&w_rows), sizeof(w_rows));
+    os.write(reinterpret_cast<const char *>(&w_cols), sizeof(w_cols));
+    // Записываем саму матрицу весов побайтово
+    os.write(reinterpret_cast<const char *>(weights_.data()),
+             w_rows * w_cols * sizeof(float));
+
+    // 2. Сохраняем вектор сдвигов (bias)
+    Matrix::Index b_rows = biases_.rows();
+    Matrix::Index b_cols = biases_.cols();
+    // Записываем размеры
+    os.write(reinterpret_cast<const char *>(&b_rows), sizeof(b_rows));
+    os.write(reinterpret_cast<const char *>(&b_cols), sizeof(b_cols));
+    // Записываем данные сдвигов
+    os.write(reinterpret_cast<const char *>(biases_.data()),
+             b_rows * b_cols * sizeof(float));
+  }
+
+  void load(std::istream &is) override {
+    // 1. Читаем матрицу весов
+    Matrix::Index w_rows, w_cols;
+    is.read(reinterpret_cast<char *>(&w_rows), sizeof(w_rows));
+    is.read(reinterpret_cast<char *>(&w_cols), sizeof(w_cols));
+
+    // Проверяем, совпадают ли размеры из файла с текущей архитектурой слоя
+    if (w_rows != weights_.rows() || w_cols != weights_.cols()) {
+      throw std::runtime_error(
+          "Ошибка загрузки весов: несоответствие размеров матрицы весов.");
+    }
+    is.read(reinterpret_cast<char *>(weights_.data()),
+            w_rows * w_cols * sizeof(float));
+
+    // 2. Читаем вектор сдвигов
+    Matrix::Index b_rows, b_cols;
+    is.read(reinterpret_cast<char *>(&b_rows), sizeof(b_rows));
+    is.read(reinterpret_cast<char *>(&b_cols), sizeof(b_cols));
+
+    if (b_rows != biases_.rows() || b_cols != biases_.cols()) {
+      throw std::runtime_error(
+          "Ошибка загрузки весов: несоответствие размеров вектора сдвигов.");
+    }
+    is.read(reinterpret_cast<char *>(biases_.data()),
+            b_rows * b_cols * sizeof(float));
+  }
 };
 
 } // namespace nn

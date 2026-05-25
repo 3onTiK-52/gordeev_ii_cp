@@ -22,6 +22,12 @@ public:
 
   // Обновление весов слоя через переданный оптимизатор
   virtual void update(Optimizer &opt) = 0;
+
+  virtual void save(std::ostream &os) const {}
+
+  // Поток берется по обычной ссылке, так как он будет модифицироваться при
+  // чтении
+  virtual void load(std::istream &is) {}
 };
 
 } // namespace nn

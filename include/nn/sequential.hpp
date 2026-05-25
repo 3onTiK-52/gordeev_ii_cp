@@ -1,6 +1,8 @@
 #pragma once
 #include "layers/layer.hpp"
+#include <fstream>
 #include <memory>
+#include <stdexcept>
 #include <vector>
 
 namespace nn {
@@ -34,6 +36,32 @@ public:
   void update(Optimizer &opt) {
     for (auto &layer : layers_) {
       layer->update(opt);
+    }
+  }
+
+  // Сохранение всей модели в файл
+  void save(const std::string &filepath) const {
+    std::ofstream os(filepath, std::ios::binary);
+    if (!os.is_open()) {
+      throw std::runtime_error(
+          "Не удалось открыть файл для сохранения модели: " + filepath);
+    }
+
+    for (const auto &layer : layers_) {
+      layer->save(os);
+    }
+  }
+
+  // Загрузка всей модели из файла
+  void load(const std::string &filepath) {
+    std::ifstream is(filepath, std::ios::binary);
+    if (!is.is_open()) {
+      throw std::runtime_error("Не удалось открыть файл для загрузки модели: " +
+                               filepath);
+    }
+
+    for (auto &layer : layers_) {
+      layer->load(is);
     }
   }
 };

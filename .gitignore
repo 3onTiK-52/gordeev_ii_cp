@@ -17,4 +17,4 @@ data/*.csv
 metrics*.csv
 
 # Системные файлы
-Thumbs.db
+Thumbs.dbmnist_train.csv

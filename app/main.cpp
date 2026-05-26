@@ -1,4 +1,3 @@
-#include <fstream>
 #include <iostream>
 #include <nn/core/activation_function.hpp>
 #include <nn/data/dataloader.hpp>
@@ -15,7 +14,7 @@ int main() {
   // 1. Загрузка обучающего датасета
   std::string train_path =
       "/home/zontik/cp_2_term/gordeev_ii_cp/mnist_train.csv";
-  std::cout << "Loading FULL train dataset from " << train_path << "...\n";
+  std::cout << "Loading full train dataset from " << train_path << "...\n";
 
   nn::Dataset train_data;
   try {
@@ -47,18 +46,19 @@ int main() {
   model.add(std::make_unique<nn::LinearLayer>(128, 10));
 
   nn::CrossEntropy criterion;
-  nn::SGD optimizer(0.1f);
+  nn::SGD optimizer(0.1f, 0.001f);
+  // nn::SGD optimizer(0.1f);
   nn::Trainer trainer(model, criterion, optimizer);
 
   // За счет батчей сеть обновляет веса чуть около 1000 раз за эпоху.
   // Поэтому 15-20 эпох вполне должно хватить (update: В целом хватает 10
-  // эпох(98.3%), делать 15(99.0%) или 20 можно только при сильной
-  // необходимости)
+  // эпох(98.3%), делать 15(99.0%) или 20(99.4%, но похоже уже на переобучение)
+  // можно только при сильной необходимости)
   int epochs = 15;
   int batch_size = 64;
 
   std::cout << "Starting Mini-Batch Training (Epochs: " << epochs
-            << ", Batch size: " << batch_size << ")...\n";
+            << ", Batch size: " << batch_size << ")..." << std::endl;
   trainer.train(X_train, Y_train_one_hot, epochs, batch_size);
 
   // 3. Сохранение весов
@@ -86,16 +86,10 @@ int main() {
   int test_samples = X_test.rows();
   std::cout << "Evaluating " << test_samples << " unseen images...\n";
 
-  // Прямой проход
   nn::Matrix Y_test_pred = model.forward(X_test);
 
-  // Считаем честную точность
+  // 5. Считаем точность
   int correct_predictions = 0;
-  std::string submission_file = "submission.csv";
-  std::ofstream sub(submission_file);
-
-  if (sub.is_open())
-    sub << "ImageId,Label\n";
 
   for (int i = 0; i < test_samples; ++i) {
     Eigen::Index predicted_label;
@@ -105,23 +99,15 @@ int main() {
     if (predicted_label == true_label) {
       correct_predictions++;
     }
-
-    // Заодно пишем в сабмит
-    if (sub.is_open()) {
-      sub << (i + 1) << "," << predicted_label << "\n";
-    }
   }
-  if (sub.is_open())
-    sub.close();
 
   float test_accuracy =
       (static_cast<float>(correct_predictions) / test_samples) * 100.0f;
 
   std::cout << "\n============================================\n";
-  std::cout << "FINAL TEST ACCURACY: " << std::fixed << std::setprecision(2)
+  std::cout << "Test accuracy: " << std::fixed << std::setprecision(2)
             << test_accuracy << "%\n";
   std::cout << "============================================\n";
-  std::cout << "Predictions also saved to " << submission_file << "!\n";
 
   return 0;
 }

@@ -1,0 +1,37 @@
+=== mnist.train pipeline ===
+
+Loading full train dataset from /home/zontik/cp_2_term/gordeev_ii_cp/mnist_train.csv...
+Loaded 60000 images for training.
+
+Building architecture...
+Starting Mini-Batch Training (Epochs: 20, Batch size: 64)...
+Epoch   1 | Loss: 0.4447 | Train Accuracy: 88.13
+Epoch   2 | Loss: 0.2387 | Train Accuracy: 93.23
+Epoch   3 | Loss: 0.1866 | Train Accuracy: 94.74
+Epoch   4 | Loss: 0.1551 | Train Accuracy: 95.68
+Epoch   5 | Loss: 0.1346 | Train Accuracy: 96.34
+Epoch   6 | Loss: 0.1204 | Train Accuracy: 96.80
+Epoch   7 | Loss: 0.1101 | Train Accuracy: 97.10
+Epoch   8 | Loss: 0.1025 | Train Accuracy: 97.36
+Epoch   9 | Loss: 0.0967 | Train Accuracy: 97.53
+Epoch  10 | Loss: 0.0920 | Train Accuracy: 97.65
+Epoch  11 | Loss: 0.0883 | Train Accuracy: 97.76
+Epoch  12 | Loss: 0.0853 | Train Accuracy: 97.85
+Epoch  13 | Loss: 0.0829 | Train Accuracy: 97.95
+Epoch  14 | Loss: 0.0808 | Train Accuracy: 98.02
+Epoch  15 | Loss: 0.0791 | Train Accuracy: 98.07
+Epoch  16 | Loss: 0.0776 | Train Accuracy: 98.11
+Epoch  17 | Loss: 0.0763 | Train Accuracy: 98.17
+Epoch  18 | Loss: 0.0751 | Train Accuracy: 98.23
+Epoch  19 | Loss: 0.0741 | Train Accuracy: 98.26
+Epoch  20 | Loss: 0.0733 | Train Accuracy: 98.29
+
+Saving production weights to mnist_weights_full.bin...
+
+=== Testing Neutral Network in real situation(not at all) ===
+Loading test dataset from /home/zontik/cp_2_term/gordeev_ii_cp/mnist_test.csv...
+Evaluating 10000 unseen images...
+
+============================================
+Test accuracy: 97.49%
+============================================

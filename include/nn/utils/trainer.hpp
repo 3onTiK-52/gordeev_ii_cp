@@ -64,7 +64,7 @@ public:
       std::cout << "Epoch " << std::setw(3) << epoch
                 << " | Loss: " << std::fixed << std::setprecision(4)
                 << epoch_loss << " | Train Accuracy: " << std::setprecision(2)
-                << epoch_accuracy << "%\n";
+                << epoch_accuracy << "%" << std::endl;
     }
   }
 };

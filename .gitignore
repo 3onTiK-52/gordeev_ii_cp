@@ -22,3 +22,6 @@ mnist_test.csv:Zone.Identifier
 
 # Системные файлы
 Thumbs.dbmnist_train.csv
+
+*.bin
+submission.csv
